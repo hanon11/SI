@@ -1,4 +1,5 @@
 function current = taboo(N)
+N = 4;
     rand('seed', 0);
     % estado aleatorio
     current = randperm(N);
