@@ -1,7 +1,6 @@
 function current = SA(N)
     T_max = 1000; T_min = 1;
     T = T_max;
-    rand('seed', 0);
     % estado aleatorio
     current = randperm(N);
     itera = 0;
