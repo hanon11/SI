@@ -1,6 +1,5 @@
 function current = taboo(N)
-N = 4;
-    rand('seed', 0);
+    rng(0);
     % estado aleatorio
     current = randperm(N);
     best = current;
@@ -8,8 +7,9 @@ N = 4;
     taboo_list = zeros(N);
     tenure = N;
     C = inf;
-    while (C > 0 && itera < 10000)
-        successors = sucesores(current);
+    reina = 1;
+    while (C > 0 && itera < 10000000 && reina <= N)
+        successors = sucesores_taboo(current, reina);
         while(~isempty(successors))
             new = successors(1,:);
             perm = new(end-1:end);
@@ -25,6 +25,7 @@ N = 4;
             end
         itera = itera+1;
         end
+        reina = reina +1;
         for i=1:1:length(taboo_list)
             for j=i+1:1:length(taboo_list)
                 if(taboo_list(perm(1),perm(2)) ~= 0)
@@ -33,5 +34,4 @@ N = 4;
             end
         end
     end
-    C
 end 
