@@ -1,11 +1,11 @@
-function current = SA(N)
+function [current, C, itera] = SA(N)
     T_max = 1000; T_min = 1;
     T = T_max;
     % estado aleatorio
     current = randperm(N);
     itera = 0;
     C = inf;
-    while (T > T_min && C ~= 0 && itera < 10000)
+    while (T > T_min && C ~= 0 && itera < 1000*N)
         new = RandomSuccessor(current);
         deltaE = fEval(new) - fEval(current);
         if(deltaE < 0)

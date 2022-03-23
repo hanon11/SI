@@ -1,36 +1,40 @@
-function best = taboo(N)
-    % estado aleatorio
+function [best, C, itera] = taboo(N)
+
     current = randperm(N);
     best = current;
+    C = fEval(best); 
+    currentC = C;
+
     itera = 0;
-    taboo_list = zeros(N);
-    tenure = N;
-    C = inf;
-    while (C > 0 && itera < 10000*N)
+    taboo_list = uint8(zeros(N));
+    tenure = 4;
+    nuevo_estado = false;
+    
+    while (C > 0 && itera < 10000)
         successors = sucesores(current);
-        while(~isempty(successors))
+        while(~isempty(successors) && ~nuevo_estado)
             new = successors(1,:);
+            cost = new(1);
             perm = new(end-1:end);
-            new = new(1:end-2);
+            new = new(2:end-2);
             successors = successors(2:end,:);
-            if(fEval(new) < fEval(best))
+            
+            if(cost < C)
                 current = new;
+                currentC = cost;
                 best = current;
-                C = fEval(best);
-                taboo_list(perm(1),perm(2)) = tenure;
-            elseif(taboo_list(perm(1),perm(2)) == 0 && taboo_list(perm(2),perm(1)) == 0)
+                C = currentC;
+                nuevo_estado = true;
+            elseif(taboo_list(perm(1),perm(2)) == 0)
                 current = new;
-                taboo_list(perm(1),perm(2)) = tenure;
+                currentC = cost;
+                nuevo_estado = true;
             end
+        end
+        
+        taboo_list = taboo_list-1;
+        taboo_list(perm(1),perm(2)) = tenure;
+        nuevo_estado = false;
         itera = itera+1;
-        end
-        for i=1:1:length(taboo_list)
-            for j=i+1:1:length(taboo_list)
-                if(taboo_list(perm(1),perm(2)) ~= 0)
-                    taboo_list(perm(1),perm(2)) = taboo_list(perm(1),perm(2))-1;
-                end
-            end
-        end
     end
-    C
 end 

@@ -4,7 +4,7 @@ function S = sucesores(v)
     for i=1:1:length(v)-1
        sumatorio = sumatorio+i;
     end
-    S = [zeros(sumatorio, length(v))];
+    S = [zeros(sumatorio, length(v)+3)];
     x = v;
     indice = 1;
     primera = true;
@@ -14,17 +14,10 @@ function S = sucesores(v)
             x([i j]) = x([j i]);
             S(indice, 1) = fEval(x);
             S(indice, 2:length(v)+1) = x;
-            if (primera == true)
-                S(indice, end+1) = i;
-                S(indice, end+1) = j;
-                primera = false;
-            else
-                S(indice, end-1) = i;
-                S(indice, end) = j;
-            end
+            S(indice, end-1) = i;
+            S(indice, end) = j;
             indice = indice + 1;
         end
     end
     S = sortrows(S);
-    S = S(:,2:end);
 end
