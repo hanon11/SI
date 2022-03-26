@@ -8,7 +8,5 @@ function parents = tournament_select(poblacion, k)
             selected(j) = randi(k);
             costes(j) = fEval(poblacion(j,:));
         end
-        
     end
-    
 end
