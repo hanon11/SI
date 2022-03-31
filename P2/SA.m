@@ -1,5 +1,5 @@
 function [current, C, itera] = SA(N)
-    T_max = 1000; T_min = 1;
+    T_max = 1000; T_min = 0;
     T = T_max;
     % estado aleatorio
     current = randperm(N);
