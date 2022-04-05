@@ -8,9 +8,11 @@ Fitness = Pob(:, end);
 Pob = Pob(:, 1:end-1);
 itera = 1;
 while itera <= MAX_itera %%AÑADIR: condiciones de parada>
-    Elegidos = SELECCION(Pob);
-    tempPob = CRUCE(Elegidos,Pcross);
-    NewPob = MUTACION(tempPob,Pmut);
-    Pob = REEMPLAZO(Pob,newPob);
+    Elegidos = tournament_select(Pob, 3, Fitness);
+    indices = Elegidos(:, end);
+    Elegidos = Elegidos(:,1:end-1);
+    tempPob = PMX(Elegidos(1,:), Elegidos(2,:));
+    NewPob = mutation(tempPob);
+    %Pob = REEMPLAZO(Pob,newPob);
     itera = itera+1;
 end
