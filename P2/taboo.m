@@ -1,8 +1,9 @@
-function [best, C, itera] = taboo(N)
-
+function [best, C, itera] = taboo(coste)
+    rng(0);
+    N=22;
     current = randperm(N);
     best = current;
-    C = fEval(best); 
+    C = fEvalPracticaEvC(best); 
     currentC = C;
 
     itera = 0;
@@ -10,7 +11,7 @@ function [best, C, itera] = taboo(N)
     tenure = 4;
     nuevo_estado = false;
     
-    while (C > 0 && itera < 10000)
+    while (C > coste && itera < 10000)
         successors = sucesores(current);
         while(~isempty(successors) && ~nuevo_estado)
             new = successors(1,:);
