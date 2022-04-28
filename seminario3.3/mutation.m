@@ -1,11 +1,11 @@
-function mutado = mutation(x)
-    mutado = x;
-    %swap 
-    elem1 = randi(length(x));
-    elem2 = randi(length(x));
-    while elem1 == elem2
-        elem2 = randi(length(x));
+function pob = mutation(pob)
+for n=1:size(pob,1)
+    if rand() > 0.5
+        [~,s] = size(pob);
+        k = randi((s/2));
+        p = randi([s/2, s]);
+        % swap alleles
+        [pob(n,p), pob(n,k)] = deal(pob(n,k), pob(n,p));
     end
-    mutado(elem1) = x(elem2);
-    mutado(elem2) = x(elem1);
+end
 end
