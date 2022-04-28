@@ -1,6 +1,6 @@
-function coste = fEval(indiv)
+function coste = fEval(indiv, Nodes)
     % Carga de datos
-    Nodes = importdata('tsp.mat');
+    %Nodes = importdata('tsp.mat');
     
     % Translación del eje Y
     minY = min(Nodes(:,3));
