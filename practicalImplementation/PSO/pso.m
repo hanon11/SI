@@ -1,20 +1,33 @@
-function [itera, sol, mejor] = pso(NReinas, semilla, w, cp, cg)
+%{
+    -- Entrada
+    semilla     : Entero para el inicio de los datos
+    
+    -- Salida
+    mejor       : solución
+    C           : fEval de la solución
+    itera       : iteraciones necesarias para llegar
+%}
+
+function [itera, C, mejor] = pso(semilla)
+
 Nodes = importdata('tsp.mat'); 
+NReinas = length(Nodes);
 NTableros = NReinas + 10;
 MAX_ITERACIONES=1000;
+
+%inicializamos coeficientes y el coste minimo
 MINFITNESS=75.665;
-%w = 0.5;
-%cp = 0.5;
-%cg = 0.5;
+w = 0.6;cp = 0.8;cg = 0.5;
 poblacion=generaTableros(NReinas,NTableros, semilla);
 velocidades = cell(NTableros,1);  %% cada individuo puede tener más o menos velocidades
 fitness = EvaluaPoblacion(poblacion,Nodes);
 [~,ind] = min(fitness);
 gbest = [poblacion(ind,:),fitness(ind)];
 pbest = [poblacion,fitness];
-itera = 1;
-itera_sin_cambio = 0;
-while (itera<=MAX_ITERACIONES) && gbest(end) > MINFITNESS && itera_sin_cambio < 2*NTableros%% COMPLETAR resto de condiciones
+itera = 1;itera_sin_cambio = 0;
+while (itera<=MAX_ITERACIONES) && gbest(end) > MINFITNESS && itera_sin_cambio < 2*NTableros 
+    %hemos considerado que si no se actualiza el mejor en 2*NTableros,
+    %salgamos del bucle para aumentar eficiencia
     for individuo=1:NTableros
         Vi=velocidades{individuo};
         Vi=multiplica(w,Vi);
@@ -43,10 +56,6 @@ while (itera<=MAX_ITERACIONES) && gbest(end) > MINFITNESS && itera_sin_cambio < 
     itera_sin_cambio=itera_sin_cambio+1;
     itera=itera+1;
 end
-if itera > MAX_ITERACIONES
-    sol = false;
-else 
-    sol = true;
-end
-mejor = gbest(end);
+C = gbest(end);
+mejor = gbest(1:end-1);
 end

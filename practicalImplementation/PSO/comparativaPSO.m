@@ -5,7 +5,7 @@ clc;
 datos = zeros(3,1);
 tStart = tic;   
 for i=1:30
-    [itera, sol, best] = pso(22,i)
+    [itera, sol, best] = pso(i);
     if sol == true
         datos(1,1) = datos(1,1)+1;
     end
